@@ -193,15 +193,29 @@ const FleetManager = React.forwardRef((props, ref) => {
       const formDataToSend = new FormData();
       
       // Add car data
-      Object.keys(formData).forEach(key => {
-        if (key === 'features') {
-          formDataToSend.append(key, JSON.stringify(formData[key]));
-        } else if (key === 'geolocation') {
-          formDataToSend.append(key, JSON.stringify(formData[key]));
-        } else if (key !== 'imageUrls') {
-          formDataToSend.append(key, formData[key]);
-        }
-      });
+     // Add car data
+Object.keys(formData).forEach(key => {
+
+  // Fix: send features correctly (as an array, not a string)
+  if (key === 'features') {
+    (formData.features || []).forEach(feature => {
+      formDataToSend.append("features[]", feature);
+    });
+    return;
+  }
+
+  // Keep geolocation as JSON
+  if (key === 'geolocation') {
+    formDataToSend.append("geolocation", JSON.stringify(formData[key]));
+    return;
+  }
+
+  // Skip imageUrls (we handle separate uploads)
+  if (key !== 'imageUrls') {
+    formDataToSend.append(key, formData[key]);
+  }
+});
+
       
       // Add new images
       selectedImages.forEach((image, index) => {
