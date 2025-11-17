@@ -607,12 +607,7 @@ const ModernBookingDetail = () => {
                           day: 'numeric'
                         })}
                         <br />
-                        <Typography component="span" variant="body2" color="text.secondary">
-                          {date.toLocaleTimeString('en-US', {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </Typography>
+                      
                       </>
                     );
                   })()}

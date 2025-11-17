@@ -51,9 +51,15 @@ exports.createMaintenanceRecord = async (req, res) => {
     const maintenanceRecord = new MaintenanceRecord(maintenanceData);
 
     await maintenanceRecord.save();
+    
 // AUTOMATIC CAR AVAILABILITY MANAGEMENT (timezone safe)
-const scheduledDateOnly = new Date(scheduledDate).toISOString().split("T")[0];
-const todayOnly = new Date().toISOString().split("T")[0];
+// FIX TIMEZONE ISSUE — compare LOCAL dates, not UTC
+const scheduled = new Date(scheduledDate);
+const scheduledDateOnly = scheduled.toLocaleDateString("en-CA"); // YYYY-MM-DD
+
+const today = new Date();
+const todayOnly = today.toLocaleDateString("en-CA"); // YYYY-MM-DD
+
 
 if (scheduledDateOnly <= todayOnly) {
   // Set car to maintenance

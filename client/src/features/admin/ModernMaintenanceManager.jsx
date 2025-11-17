@@ -252,7 +252,10 @@ const ModernMaintenanceManager = forwardRef(({ openScheduleDialog, onCloseSchedu
       // Prepare data with proper conversions
       const submitData = {
         ...formData,
-        scheduledDate: formData.scheduledDate ? formData.scheduledDate.format('YYYY-MM-DD') : '',
+        scheduledDate: formData.scheduledDate
+  ? formData.scheduledDate.toDate().toISOString().split("T")[0]
+  : "",
+
         estimatedCost: parseFloat(formData.estimatedCost) || 0,
         actualCost: parseFloat(formData.actualCost) || 0,
         mileage: parseInt(formData.mileage) || 0
@@ -1290,7 +1293,8 @@ const ModernMaintenanceManager = forwardRef(({ openScheduleDialog, onCloseSchedu
                     label="Scheduled Date"
                     value={formData.scheduledDate}
                     onChange={(newValue) => setFormData({ ...formData, scheduledDate: newValue })}
-                    minDate={dayjs()}
+                    minDate={dayjs().startOf("day")}
+
                     sx={{
                       '& .MuiPickersDay-today': {
                         border: 'none !important',
