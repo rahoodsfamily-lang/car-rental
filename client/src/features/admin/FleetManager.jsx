@@ -216,7 +216,12 @@ Object.keys(formData).forEach(key => {
   }
 });
 
-      
+if (editDialog.item && formData.imageUrls) {
+  const existingImages = formData.imageUrls || [];
+  existingImages.forEach(url => {
+    formDataToSend.append("existingImages[]", url);
+  });
+}
       // Add new images
       selectedImages.forEach((image, index) => {
         formDataToSend.append('images', image);

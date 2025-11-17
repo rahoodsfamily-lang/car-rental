@@ -129,7 +129,8 @@ const ModernCarCard = ({ car, onFavorite, onBookNow, isFavorite = false }) => {
     <Card
       sx={{
         width: '100%',
-        minWidth: { xs: '280px', sm: '280px', md: '300px' },
+        minWidth: 0,
+        width: '100%',
         maxWidth: '100%',
         height: { xs: 420, sm: 450, md: 480 },
         display: 'flex',

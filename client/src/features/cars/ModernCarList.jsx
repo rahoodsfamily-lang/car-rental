@@ -768,23 +768,25 @@ const ModernCarList = () => {
         </Paper>
       ) : (
         <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: '1fr',
-              sm: 'repeat(auto-fill, minmax(280px, 1fr))',
-              md: 'repeat(auto-fill, minmax(320px, 1fr))',
-              lg: 'repeat(auto-fill, minmax(340px, 1fr))'
-            },
-            gap: { xs: 2, sm: 2.5, md: 3 },
-            alignItems: 'stretch',
-            width: '100%',
-            maxWidth: '100%'
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
+            lg: 'repeat(3, 1fr)'
+          },
+          
+          gap: { xs: 2, sm: 2.5, md: 3 },
+          justifyItems: "center",            // This centers single cards
+          alignItems: 'stretch',
+          width: '100%',
+          maxWidth: '100%',
           }}
         >
           {cars.map((car, index) => (
             <Zoom in timeout={300 + index * 50} style={{ transitionDelay: `${index * 50}ms` }} key={car._id}>
-              <Box sx={{ display: 'flex' }}>
+             <Box sx={{ width: '100%', minWidth: 0 }}>
                 <ModernCarCard
                   car={car}
                   onFavorite={handleFavorite}
