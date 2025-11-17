@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Verification Failed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #dc3545;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error-box {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Car Rental System</h1>
+        <h2>Payment Verification Failed</h2>
+    </div>
+    
+    <div class="content">
+        <p>Dear {{userName}},</p>
+        
+        <div class="error-box">
+            <p style="margin: 0;"><strong>✗ Payment Verification Failed</strong></p>
+        </div>
+        
+        <p>We regret to inform you that your payment verification was unsuccessful.</p>
+        
+        <p><strong>Payment Details:</strong></p>
+        <ul>
+            <li>Amount: ₱{{amount}}</li>
+            <li>Payment Method: {{paymentMethod}}</li>
+            <li>Booking ID: {{bookingId}}</li>
+        </ul>
+        
+        <div class="warning-box">
+            <p><strong>Reason for Rejection:</strong></p>
+            <p>{{rejectionReason}}</p>
+        </div>
+        
+        <p>{{message}}</p>
+        
+        <p><strong>What to do next:</strong></p>
+        <ul>
+            <li>Review the rejection reason above</li>
+            <li>Submit a new payment with correct information</li>
+            <li>Contact our support team if you need assistance</li>
+            <li>Ensure payment proof is clear and shows the correct amount</li>
+        </ul>
+        
+        <p>Your booking is still pending and will remain active for 24 hours. Please submit a valid payment to confirm your booking.</p>
+        
+        <p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+        
+        <p>Best regards,<br>
+        The Car Rental Team</p>
+    </div>
+    
+    <div class="footer">
+        <p>This is an automated email. Please do not reply directly to this message.</p>
+        <p>&copy; 2025 Car Rental System. All rights reserved.</p>
+    </div>
+</body>
+</html>
