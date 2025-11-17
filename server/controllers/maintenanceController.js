@@ -51,31 +51,25 @@ exports.createMaintenanceRecord = async (req, res) => {
     const maintenanceRecord = new MaintenanceRecord(maintenanceData);
 
     await maintenanceRecord.save();
+// AUTOMATIC CAR AVAILABILITY MANAGEMENT (timezone safe)
+const scheduledDateOnly = new Date(scheduledDate).toISOString().split("T")[0];
+const todayOnly = new Date().toISOString().split("T")[0];
 
-    // AUTOMATIC CAR AVAILABILITY MANAGEMENT
-    // Check if maintenance is scheduled for today or in the past
-    const scheduledDateObj = new Date(scheduledDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    scheduledDateObj.setHours(0, 0, 0, 0);
-    
-    let carStatusChanged = false;
-    if (scheduledDateObj <= today) {
-      // Automatically set car to maintenance if scheduled for today or past
-      await Car.findByIdAndUpdate(car, { availability: 'maintenance' });
-      carStatusChanged = true;
-      
-      // Broadcast car status change via WebSocket
-      try {
-        emitToAll('carStatusUpdated', {
-          carId: car,
-          availability: 'maintenance',
-          updatedAt: new Date()
-        });
-      } catch (socketError) {
-        console.error('Error broadcasting car status update:', socketError);
-      }
-    }
+if (scheduledDateOnly <= todayOnly) {
+  // Set car to maintenance
+  await Car.findByIdAndUpdate(car, { availability: "maintenance" });
+
+  try {
+    emitToAll("carStatusUpdated", {
+      carId: car,
+      availability: "maintenance",
+      updatedAt: new Date()
+    });
+  } catch (socketError) {
+    console.error("Error broadcasting car status update:", socketError);
+  }
+}
+
 
     // Populate for response
     await maintenanceRecord.populate('car', 'make model year licensePlate');
