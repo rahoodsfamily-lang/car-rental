@@ -80,7 +80,8 @@ router.post('/register', validateRegistration, async (req, res) => {
         let emailContent = await fs.readFile(templatePath, 'utf8');
         
         // Create verification link
-        const verificationLink = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
+        const frontendBaseUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+        const verificationLink = `${frontendBaseUrl}/verify-email?token=${verificationToken}`;
         const userName = `${firstName} ${lastName}`;
         
         // Replace placeholders
@@ -453,7 +454,8 @@ router.post('/resend-verification', async (req, res) => {
       const templatePath = path.join(__dirname, '../utils/emailTemplates/emailVerification.html');
       let emailContent = await fs.readFile(templatePath, 'utf8');
       
-      const verificationLink = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
+      const frontendBaseUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+      const verificationLink = `${frontendBaseUrl}/verify-email?token=${verificationToken}`;
       const userName = `${user.profile.firstName} ${user.profile.lastName}`;
       
       emailContent = emailContent.replace('{{userName}}', userName);

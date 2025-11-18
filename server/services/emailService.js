@@ -76,8 +76,9 @@ class EmailService {
         await this.initializeTransporter();
       }
 
-      // Create reset URL - in production, this would be your frontend URL
-      const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+      // Create reset URL using configured frontend base URL
+      const frontendBaseUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+      const resetUrl = `${frontendBaseUrl}/reset-password/${resetToken}`;
       
       // Email content
       const mailOptions = {
@@ -227,7 +228,8 @@ class EmailService {
   // SendGrid API method (more reliable than SMTP)
   async sendViaSendGridAPI(email, resetToken, userName) {
     try {
-      const resetUrl = `https://car-rental-frontend-phi.vercel.app/reset-password/${resetToken}`;
+      const frontendBaseUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+      const resetUrl = `${frontendBaseUrl}/reset-password/${resetToken}`;
       
       const msg = {
         to: email,
